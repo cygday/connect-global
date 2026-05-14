@@ -1,0 +1,52 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "Public profile information for a user.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "language": { "type": "string" },
+        "bio": { "type": "string" },
+        "country": { "type": "string" },
+        "publicKey": { "type": "string", "description": "X25519 public key for E2EE" },
+        "lastActive": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "displayName", "publicKey"]
+    },
+    "Chat": {
+      "title": "Chat Session",
+      "description": "Represents a conversational thread between two users.",
+      "type": "object",
+      "properties": {
+        "participants": { "type": "array", "items": { "type": "string" } },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "lastMessage": { "type": "string" }
+      },
+      "required": ["participants", "createdAt"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "An encrypted message within a chat.",
+      "type": "object",
+      "properties": {
+        "senderId": { "type": "string" },
+        "iv": { "type": "string", "description": "Initialization vector for AES-GCM" },
+        "content": { "type": "string", "description": "Encrypted message content (base64)" },
+        "type": { "type": "string", "enum": ["text", "file"] },
+        "fileName": { "type": "string" },
+        "fileType": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["senderId", "iv", "content", "type", "createdAt"]
+    }
+  },
+  "firestore": {
+    "users": { "schema": "User", "description": "Collection of user profiles." },
+    "chats": { "schema": "Chat", "description": "Collection of chat sessions." },
+    "chats/{chatId}/messages": { "schema": "Message", "description": "Subcollection of messages for a specific chat." }
+  }
+}

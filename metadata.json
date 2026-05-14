@@ -1,0 +1,13 @@
+{
+  "name": "ConnectGlobal",
+  "description": "A worldwide chat app with end-to-end encryption, file sharing, and instant translation.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "realtime_chat",
+    "e2e_encryption",
+    "file_sharing"
+  ]
+}
